@@ -106,8 +106,11 @@ class SignTransaction extends Component {
   render() {
     return (
       <SharesWrap>
-        <h4>Sign a transaction</h4>
-        <SubText>Claim revenue</SubText>
+        <h4>Claim your dividends</h4>
+        <SubText>
+          In this dapp you can verify if you're eligible to claim your DAO
+          profits
+        </SubText>
 
         <SharesArea>
           <CurrentPeriodArea>
