@@ -1,6 +1,6 @@
 import { web3 } from "./uportSetup";
 
-function StockTokenContractSetup() {
+function StockTokenContractSetup(address) {
   let StockTokenABI = web3.eth.contract([
     {
       constant: true,
@@ -236,9 +236,7 @@ function StockTokenContractSetup() {
     }
   ]);
 
-  let StockTokenContractObj = StockTokenABI.at(
-    "0x3b4f2bbb06d8673ee4ec12f073cf48ae25ee06b7"
-  );
+  let StockTokenContractObj = StockTokenABI.at(address);
   return StockTokenContractObj;
 }
 

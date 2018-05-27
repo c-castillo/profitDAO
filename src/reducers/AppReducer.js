@@ -15,6 +15,16 @@ export default (state = initialState, payload) => {
         gettingCurrentPeriod: false,
         periodUser: payload.data
       };
+    case "GET_TOKEN_BALANCE_ERROR":
+      return { ...state, gettingTokenBalance: false, error: payload.data };
+    case "GET_TOKEN_BALANCE_REQUEST":
+      return { ...state, gettingTokenBalance: true };
+    case "GET_TOKEN_BALANCE_SUCCESS":
+      return {
+        ...state,
+        gettingTokenBalance: false,
+        tokenQty: payload.data
+      };
     case "GET_CURRENT_PERIOD_ERROR":
       return { ...state, gettingCurrentPeriod: false, error: payload.data };
     case "GET_POOL_BALANCE_REQUEST":
@@ -30,23 +40,19 @@ export default (state = initialState, payload) => {
     case "UPDATE_SHARES_INPUT":
       return { ...state, sharesInput: payload.data };
 
-    case "CLAIM_DIVIDENDS_REQUEST":
+    case "BUY_SHARES_REQUEST":
       return { ...state, confirmingInProgress: true };
-    case "CLAIM_DIVIDENDS_PENDING":
-      return {
-        ...state,
-        claimingInProgress: true,
-        confirmingInProgress: false
-      };
-    case "CLAIM_DIVIDENDS_SUCCESS":
+    case "BUY_SHARES_PENDING":
+      return { ...state, buyingInProgress: true, confirmingInProgress: false };
+    case "BUY_SHARES_SUCCESS":
       return {
         ...state,
         txHash: payload.tx,
-        claimingInProgress: false,
+        buyingInProgress: false,
         periodUser: payload.data
       };
-    case "CLAIM_DIVIDENDS_ERROR":
-      return { ...state, claimingInProgress: false, periodUser: payload.data };
+    case "BUY_SHARES_ERROR":
+      return { ...state, buyingInProgress: false, periodUser: payload.data };
 
     case "BUY_SHARES_DEMO_COMPLETE":
       return { ...state, collectCredentialsPage: true };

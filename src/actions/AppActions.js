@@ -64,20 +64,20 @@ export const getCurrentPeriodERROR = data => {
 // Get Current Token
 // //////////////////////////////////////////////
 
-export const getCurrentTokenRequest = () => {
+export const getTokenBalanceREQUEST = () => {
   return {
-    type: "GET_POOL_BALANCE_REQUEST"
+    type: "GET_TOKEN_BALANCE_REQUEST"
   };
 };
-export const getCurrentTokenSuccess = data => {
+export const getTokenBalanceSUCCESS = data => {
   return {
-    type: "GET_CURRENT_TOKEN_SUCCESS",
+    type: "GET_TOKEN_BALANCE_SUCCESS",
     data
   };
 };
-export const getCurrentTokenError = data => {
+export const getTokenBalanceERROR = data => {
   return {
-    type: "GET_CURRENT_PERIOD_ERROR",
+    type: "GET_TOKEN_BALANCE_ERROR",
     data
   };
 };
