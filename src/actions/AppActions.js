@@ -66,7 +66,7 @@ export const getCurrentPeriodERROR = data => {
 
 export const getCurrentTokenRequest = () => {
   return {
-    type: "GET_CURRENT_TOKEN_REQUEST"
+    type: "GET_POOL_BALANCE_REQUEST"
   };
 };
 export const getCurrentTokenSuccess = data => {
@@ -100,6 +100,28 @@ export const getUserPeriodSUCCESS = data => {
 export const getUserPeriodERROR = data => {
   return {
     type: "GET_USER_PERIOD_ERROR",
+    data
+  };
+};
+
+// //////////////////////////////////////////////
+// Get Pool Balance
+// //////////////////////////////////////////////
+
+export const getPoolBalanceREQUEST = () => {
+  return {
+    type: "GET_POOL_BALANCE_REQUEST"
+  };
+};
+export const getPoolBalanceSUCCESS = data => {
+  return {
+    type: "GET_POOL_BALANCE_SUCCESS",
+    data
+  };
+};
+export const getPoolBalanceERROR = data => {
+  return {
+    type: "GET_POOL_BALANCE_ERROR",
     data
   };
 };

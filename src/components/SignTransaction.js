@@ -9,6 +9,7 @@ import SharesContract from "../utilities/SharesContract";
 import waitForMined from "../utilities/waitForMined";
 import checkAddressMNID from "../utilities/checkAddressMNID";
 import getUserPeriod from "../utilities/getUserPeriod";
+import getPoolBalance from "../utilities/getPoolBalance";
 
 import styled from "styled-components";
 
@@ -38,16 +39,24 @@ const SubText = styled.p`
 class SignTransaction extends Component {
   constructor(props) {
     super(props);
-    this.getCurrentPeriod = this.getCurrentPeriod.bind(this);
+    this.displayCurrentPeriod = this.displayCurrentPeriod.bind(this);
+    this.displayPoolBalance = this.displayPoolBalance.bind(this);
     this.buyShares = this.buyShares.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  getCurrentPeriod() {
+  displayCurrentPeriod() {
     // TODO: Dump this check once MNID is default behavior
     const addr = checkAddressMNID(this.props.uport.address);
     const actions = this.props.actions;
     getUserPeriod(addr, actions);
+  }
+
+  displayPoolBalance() {
+    // TODO: Dump this check once MNID is default behavior
+    const addr = checkAddressMNID(this.props.uport.address);
+    const actions = this.props.actions;
+    getPoolBalance(addr, actions);
   }
 
   buyShares(e) {
@@ -90,7 +99,8 @@ class SignTransaction extends Component {
 
   componentDidMount() {
     // Populate existing shares
-    this.getCurrentPeriod();
+    this.displayCurrentPeriod();
+    this.displayPoolBalance();
   }
 
   render() {
