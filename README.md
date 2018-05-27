@@ -43,7 +43,7 @@ With the uPort library, when a transaction is going to be signed, if the `notifi
 
 When a transaction is signed and submitted to a smart contract, the Ethereum network takes time to mine (confirm) the transaction (typically 15 seconds). During this time we will need to poll the Web3 node (aka provider and in our case, its Infura), to see if its been mined. We will keep checking it with a function called `waitForMined` and have a pending callback and a success callback to manage state.
 
-[Click here to see the contract instantiation code](https://github.com/uport-project/demo/blob/master/src/utilities/SharesContract.js)
+
 
 [Click here to see the getShares code](https://github.com/uport-project/demo/blob/master/src/utilities/getShares.js#L5)
 

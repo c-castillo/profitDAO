@@ -127,54 +127,54 @@ export const getPoolBalanceERROR = data => {
 };
 
 // // //////////////////////////////////////////////
-// // Buy Shares
+// // Claim Dividends
 // // //////////////////////////////////////////////
 
-// export const buySharesREQUEST = (tx, amount) => {
-//   return {
-//     type: "BUY_SHARES_REQUEST",
-//     amount: amount,
-//     buyingInProgress: true
-//   };
-// };
-// export const buySharesPENDING = () => {
-//   return {
-//     type: "BUY_SHARES_PENDING"
-//   };
-// };
-// export const buySharesSUCCESS = (tx, data) => {
-//   return {
-//     type: "BUY_SHARES_SUCCESS",
-//     tx: tx,
-//     data
-//   };
-// };
-// export const buySharesERROR = data => {
-//   return {
-//     type: "BUY_SHARES_ERROR",
-//     data
-//   };
-// };
+export const claimDividendsREQUEST = (tx, amount) => {
+  return {
+    type: "CLAIM_DIVIDENDS_REQUEST",
+    amount: amount,
+    claimingInProgress: true
+  };
+};
+export const claimDividendsPENDING = () => {
+  return {
+    type: "CLAIM_DIVIDENDS_PENDING"
+  };
+};
+export const claimDividendsSUCCESS = (tx, data) => {
+  return {
+    type: "CLAIM_DIVIDENDS_SUCCESS",
+    tx: tx,
+    data
+  };
+};
+export const claimDividendsERROR = data => {
+  return {
+    type: "CLAIM_DIVIDENDS_ERROR",
+    data
+  };
+};
 
-// //////////////////////////////////////////////
+//////////////////////////////////////////////
 // Complete Buy Shares Demo
-// //////////////////////////////////////////////
+//////////////////////////////////////////////
 
-// export const buySharesDemoComplete = data => {
-//   return {
-//     type: "BUY_SHARES_DEMO_COMPLETE"
-//   };
-// };
+export const buySharesDemoComplete = data => {
+  return {
+    type: "BUY_SHARES_DEMO_COMPLETE"
+  };
+};
 
-// //////////////////////////////////////////////
+//////////////////////////////////////////////
 // Complete Credentials Demo
-// //////////////////////////////////////////////
+//////////////////////////////////////////////
 
-// export const credentialsDemoComplete = data => {
-//   return {
-//     type: "CREDENTIALS_DEMO_COMPLETE"
-//   };
-// };
+export const credentialsDemoComplete = data => {
+  return {
+    type: "CREDENTIALS_DEMO_COMPLETE"
+  };
+};
 
 // //////////////////////////////////////////////
 // Register App Area Complete

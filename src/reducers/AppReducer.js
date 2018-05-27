@@ -30,19 +30,23 @@ export default (state = initialState, payload) => {
     case "UPDATE_SHARES_INPUT":
       return { ...state, sharesInput: payload.data };
 
-    case "BUY_SHARES_REQUEST":
+    case "CLAIM_DIVIDENDS_REQUEST":
       return { ...state, confirmingInProgress: true };
-    case "BUY_SHARES_PENDING":
-      return { ...state, buyingInProgress: true, confirmingInProgress: false };
-    case "BUY_SHARES_SUCCESS":
+    case "CLAIM_DIVIDENDS_PENDING":
+      return {
+        ...state,
+        claimingInProgress: true,
+        confirmingInProgress: false
+      };
+    case "CLAIM_DIVIDENDS_SUCCESS":
       return {
         ...state,
         txHash: payload.tx,
-        buyingInProgress: false,
+        claimingInProgress: false,
         periodUser: payload.data
       };
-    case "BUY_SHARES_ERROR":
-      return { ...state, buyingInProgress: false, periodUser: payload.data };
+    case "CLAIM_DIVIDENDS_ERROR":
+      return { ...state, claimingInProgress: false, periodUser: payload.data };
 
     case "BUY_SHARES_DEMO_COMPLETE":
       return { ...state, collectCredentialsPage: true };

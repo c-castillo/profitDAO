@@ -5,13 +5,14 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as AppActions from "../actions/AppActions";
 
-import SharesContract from "../utilities/SharesContract";
 import waitForMined from "../utilities/waitForMined";
 import checkAddressMNID from "../utilities/checkAddressMNID";
 import getUserPeriod from "../utilities/getUserPeriod";
 import getPoolBalance from "../utilities/getPoolBalance";
+//import claimRevenue from "../utilities/claimRevenue";
 
 import styled from "styled-components";
+import StockContract from "../utilities/StockContract";
 
 const SharesWrap = styled.section`
   @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
@@ -25,9 +26,9 @@ const CurrentPeriodArea = styled.div`
 const CurrentSharesNumber = styled.span`
   color: white;
 `;
-const FormBuyshares = styled.form``;
+const FormClaimDividends = styled.form``;
 const FormRow = styled.div``;
-const BtnBuyShares = styled.button``;
+const BtnClaimDividends = styled.button``;
 const NextButton = styled.button`
   margin-top: 20px;
 `;
@@ -41,55 +42,59 @@ class SignTransaction extends Component {
     super(props);
     this.displayCurrentPeriod = this.displayCurrentPeriod.bind(this);
     this.displayPoolBalance = this.displayPoolBalance.bind(this);
-    this.buyShares = this.buyShares.bind(this);
+    this.claimDividends = this.claimDividends.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   displayCurrentPeriod() {
-    // TODO: Dump this check once MNID is default behavior
     const addr = checkAddressMNID(this.props.uport.address);
     const actions = this.props.actions;
     getUserPeriod(addr, actions);
   }
 
   displayPoolBalance() {
-    // TODO: Dump this check once MNID is default behavior
     const addr = checkAddressMNID(this.props.uport.address);
     const actions = this.props.actions;
     getPoolBalance(addr, actions);
   }
 
-  buyShares(e) {
+  claimDividends(e) {
     e.preventDefault();
 
-    console.log("buyShares");
+    console.log("claiming Dividends");
 
-    let sharesNumber = this.props.sharesInput;
+    let amount = this.props.tokenQty / this.props.poolBalance;
     const addr = checkAddressMNID(this.props.uport.address);
     const actions = this.props.actions;
 
-    console.log({ sharesNumber, addr, actions });
+    console.log({ amount, addr, actions });
 
-    this.props.actions.buySharesREQUEST(sharesNumber);
+    this.props.actions.claimDividendsREQUEST(amount);
 
-    SharesContract.updateShares(sharesNumber, (error, txHash) => {
-      console.log("updateShares");
+    //claimRevenue(addr, amount, actions);
+    StockContract.currentToken.call(addr, (error, token) => {
       if (error) {
-        this.props.actions.buySharesERROR(error);
+        this.props.actions.claimDividendsERROR(error);
+        throw error;
       }
-      waitForMined(
-        addr,
-        txHash,
-        { blockNumber: null },
-        actions,
-        () => {
-          this.props.actions.buySharesPENDING();
-        },
-        total => {
-          console.log("waitForMined complete");
-          this.props.actions.buySharesSUCCESS(txHash, total);
+      StockContract.claimRevenue.call(addr, amount, token, (error, txHash) => {
+        if (error) {
+          throw error;
         }
-      );
+        waitForMined(
+          addr,
+          txHash,
+          { blockNumber: null },
+          actions,
+          () => {
+            this.props.actions.claimDividendsPENDING();
+          },
+          total => {
+            console.log("waitForMined complete");
+            this.props.actions.claimDividendsSUCCESS(txHash, total);
+          }
+        );
+      });
     });
   }
 
@@ -98,7 +103,6 @@ class SignTransaction extends Component {
   }
 
   componentDidMount() {
-    // Populate existing shares
     this.displayCurrentPeriod();
     this.displayPoolBalance();
   }
@@ -124,7 +128,7 @@ class SignTransaction extends Component {
             <CurrentSharesNumber>{this.props.poolBalance}</CurrentSharesNumber>
           </CurrentPeriodArea>
 
-          {this.props.buyingInProgress ? (
+          {this.props.claimingInProgress ? (
             <div>
               <br />
               <div className="spinner center">
@@ -135,28 +139,24 @@ class SignTransaction extends Component {
               <br />
             </div>
           ) : (
-            <FormBuyshares>
+            <FormClaimDividends>
               <FormRow>
-                <label>DAI to withdraw: </label>
-                <input
-                  id="sharesInput"
-                  type="number"
-                  style={{ paddingLeft: ".5em", "font-size": "16px" }}
-                  onChange={this.handleInputChange}
-                  value={this.props.sharesInput}
-                />
+                <label>Dividends to withdraw: </label>
+                <span>{this.props.tokenQty / this.props.poolBalance}</span>
               </FormRow>
               <FormRow>
                 <br />
-                <BtnBuyShares onClick={this.buyShares}>Claim DAI</BtnBuyShares>
+                <BtnClaimDividends onClick={this.claimDividends}>
+                  Claim dividends
+                </BtnClaimDividends>
               </FormRow>
               <FormRow>
                 <br />
-                {this.props.buyingInProgress ? (
+                {this.props.claimingInProgress ? (
                   <div>Please wait for transaction card on phone</div>
                 ) : null}
               </FormRow>
-            </FormBuyshares>
+            </FormClaimDividends>
           )}
         </SharesArea>
         {this.props.confirmingInProgress ? (
@@ -179,7 +179,7 @@ const mapStateToProps = (state, props) => {
     confirmingInProgress: state.App.confirmingInProgress,
     periodUser: state.App.periodUser,
     poolBalance: state.App.poolBalance,
-    buyingInProgress: state.App.buyingInProgress,
+    claimingInProgress: state.App.claimingInProgress,
     tx: state.App.tx,
     error: state.App.error
   };
