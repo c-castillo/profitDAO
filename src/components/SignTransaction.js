@@ -18,7 +18,7 @@ const SharesWrap = styled.section`
   }
 `;
 const SharesArea = styled.div``;
-const CurrentSharesArea = styled.div`
+const CurrentPeriodArea = styled.div`
   margin-bottom: 20px;
 `;
 const CurrentSharesNumber = styled.span`
@@ -100,11 +100,11 @@ class SignTransaction extends Component {
         <SubText>Claim revenue</SubText>
 
         <SharesArea>
-          <CurrentSharesArea>
-            <span>Your DAI for this period: </span>
+          <CurrentPeriodArea>
+            <span>Your current period </span>
             <br />
-            <CurrentSharesNumber>{this.props.sharesTotal}</CurrentSharesNumber>
-          </CurrentSharesArea>
+            <CurrentSharesNumber>{this.props.periodUser}</CurrentSharesNumber>
+          </CurrentPeriodArea>
 
           {this.props.buyingInProgress ? (
             <div>
@@ -157,9 +157,9 @@ const mapStateToProps = (state, props) => {
   return {
     uport: state.App.uport,
     sharesInput: state.App.sharesInput,
-    gettingShares: state.App.gettingShares,
+    gettingCurrentPeriod: state.App.gettingCurrentPeriod,
     confirmingInProgress: state.App.confirmingInProgress,
-    sharesTotal: state.App.sharesTotal,
+    periodUser: state.App.periodUser,
     buyingInProgress: state.App.buyingInProgress,
     tx: state.App.tx,
     error: state.App.error

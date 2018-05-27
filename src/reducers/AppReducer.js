@@ -11,21 +11,21 @@ export default (state = initialState, payload) => {
         signTransactionPage: true
       };
 
-    case "GET_CURRENT_SHARES_REQUEST":
+    case "GET_CURRENT_PERIOD_REQUEST":
       return {
         ...state,
-        gettingShares: true
+        gettingCurrentPeriod: true
       };
-    case "GET_CURRENT_SHARES_SUCCESS":
+    case "GET_CURRENT_PERIOD_SUCCESS":
       return {
         ...state,
-        gettingShares: false,
-        sharesTotal: payload.data
+        gettingCurrentPeriod: false,
+        periodTotal: payload.data
       };
-    case "GET_CURRENT_SHARES_ERROR":
+    case "GET_CURRENT_PERIOD_ERROR":
       return {
         ...state,
-        gettingShares: false,
+        gettingCurrentPeriod: false,
         error: payload.data
       };
     case "UPDATE_SHARES_INPUT":
@@ -50,14 +50,10 @@ export default (state = initialState, payload) => {
         ...state,
         txHash: payload.tx,
         buyingInProgress: false,
-        sharesTotal: payload.data
+        periodUser: payload.data
       };
     case "BUY_SHARES_ERROR":
-      return {
-        ...state,
-        buyingInProgress: false,
-        sharesTotal: payload.data
-      };
+      return { ...state, buyingInProgress: false, periodUser: payload.data };
 
     case "BUY_SHARES_DEMO_COMPLETE":
       return {
