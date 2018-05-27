@@ -16,11 +16,11 @@ export default (state = initialState, payload) => {
         ...state,
         gettingCurrentPeriod: true
       };
-    case "GET_CURRENT_PERIOD_SUCCESS":
+    case "GET_USER_PERIOD_SUCCESS":
       return {
         ...state,
         gettingCurrentPeriod: false,
-        periodTotal: payload.data
+        periodUser: payload.data
       };
     case "GET_CURRENT_PERIOD_ERROR":
       return {

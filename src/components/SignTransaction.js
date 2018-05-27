@@ -8,7 +8,7 @@ import * as AppActions from "../actions/AppActions";
 import SharesContract from "../utilities/SharesContract";
 import waitForMined from "../utilities/waitForMined";
 import checkAddressMNID from "../utilities/checkAddressMNID";
-import getShares from "../utilities/getShares";
+import getUserPeriod from "../utilities/getUserPeriod";
 
 import styled from "styled-components";
 
@@ -38,16 +38,16 @@ const SubText = styled.p`
 class SignTransaction extends Component {
   constructor(props) {
     super(props);
-    this.getCurrentShares = this.getCurrentShares.bind(this);
+    this.getCurrentPeriod = this.getCurrentPeriod.bind(this);
     this.buyShares = this.buyShares.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  getCurrentShares() {
+  getCurrentPeriod() {
     // TODO: Dump this check once MNID is default behavior
     const addr = checkAddressMNID(this.props.uport.address);
     const actions = this.props.actions;
-    getShares(addr, actions);
+    getUserPeriod(addr, actions);
   }
 
   buyShares(e) {
@@ -90,7 +90,7 @@ class SignTransaction extends Component {
 
   componentDidMount() {
     // Populate existing shares
-    this.getCurrentShares();
+    this.getCurrentPeriod();
   }
 
   render() {
@@ -104,6 +104,11 @@ class SignTransaction extends Component {
             <span>Your current period </span>
             <br />
             <CurrentSharesNumber>{this.props.periodUser}</CurrentSharesNumber>
+          </CurrentPeriodArea>
+          <CurrentPeriodArea>
+            <span>Pool period balance </span>
+            <br />
+            <CurrentSharesNumber>{this.props.poolBalance}</CurrentSharesNumber>
           </CurrentPeriodArea>
 
           {this.props.buyingInProgress ? (
@@ -160,6 +165,7 @@ const mapStateToProps = (state, props) => {
     gettingCurrentPeriod: state.App.gettingCurrentPeriod,
     confirmingInProgress: state.App.confirmingInProgress,
     periodUser: state.App.periodUser,
+    poolBalance: state.App.poolBalance,
     buyingInProgress: state.App.buyingInProgress,
     tx: state.App.tx,
     error: state.App.error
