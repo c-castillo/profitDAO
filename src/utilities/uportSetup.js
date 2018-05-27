@@ -1,6 +1,6 @@
 import { Connect, SimpleSigner } from "uport-connect";
 
-const uport = new Connect("ethbahack", {
+const uport = new Connect("profitDAO", {
   clientId: "2of8WzgL7ZTgPHotQjmyAcMoQLuiDiQ69bq",
   network: "kovan",
   signer: SimpleSigner(
