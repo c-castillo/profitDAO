@@ -9,6 +9,7 @@ import waitForMined from "../utilities/waitForMined";
 import checkAddressMNID from "../utilities/checkAddressMNID";
 import getUserPeriod from "../utilities/getUserPeriod";
 import getPoolBalance from "../utilities/getPoolBalance";
+import getTokenBalance from "../utilities/getTokenBalance";
 //import claimRevenue from "../utilities/claimRevenue";
 
 import styled from "styled-components";
@@ -42,6 +43,7 @@ class SignTransaction extends Component {
     super(props);
     this.displayCurrentPeriod = this.displayCurrentPeriod.bind(this);
     this.displayPoolBalance = this.displayPoolBalance.bind(this);
+    this.displayTokenQuantity = this.displayTokenQuantity.bind(this);
     this.claimDividends = this.claimDividends.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -56,6 +58,12 @@ class SignTransaction extends Component {
     const addr = checkAddressMNID(this.props.uport.address);
     const actions = this.props.actions;
     getPoolBalance(addr, actions);
+  }
+
+  displayTokenQuantity() {
+    const addr = checkAddressMNID(this.props.uport.address);
+    const actions = this.props.actions;
+    getTokenBalance(addr, actions);
   }
 
   claimDividends(e) {
@@ -105,6 +113,7 @@ class SignTransaction extends Component {
   componentDidMount() {
     this.displayCurrentPeriod();
     this.displayPoolBalance();
+    this.displayTokenQuantity();
   }
 
   render() {
@@ -179,6 +188,7 @@ const mapStateToProps = (state, props) => {
     confirmingInProgress: state.App.confirmingInProgress,
     periodUser: state.App.periodUser,
     poolBalance: state.App.poolBalance,
+    tokenQty: state.App.tokenQty,
     claimingInProgress: state.App.claimingInProgress,
     tx: state.App.tx,
     error: state.App.error
