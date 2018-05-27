@@ -11,8 +11,7 @@ async function getTokenBalance(addr, actions) {
     if (token === "0x") {
       token = "0xB0e260729A588573A132b08c2b856B4B373e06Eb";
     }
-    const tokenContract = StockTokenContract(token);
-    tokenContract.balanceOf.call(token, (error, balance) => {
+    StockTokenContract(token).balanceOf.call(token, (error, balance) => {
       if(error){
         actions.getTokenBalanceERROR(error)
         throw(error)

@@ -240,6 +240,4 @@ function StockTokenContractSetup(address) {
   return StockTokenContractObj;
 }
 
-const StockTokenContract = StockTokenContractSetup();
-
-export default StockTokenContract;
+export default StockTokenContractSetup;
